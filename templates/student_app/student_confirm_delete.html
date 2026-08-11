@@ -129,16 +129,3 @@ body{
 </div>
 
 {% endblock %}
-
-{% comment %} {% extends "student_app/base.html" %}
-{% block content %}
-<h2>Student Delete</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Delete">
-</form>
-<a href="{% url 'student_list' %}">
-    <button>Cancel</button>
-</a>
-{% endblock %} {% endcomment %}

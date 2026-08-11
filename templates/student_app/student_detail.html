@@ -127,14 +127,3 @@ body{
 </div>
 
 {% endblock %}
-
-{% comment %} {% extends "student_app/base.html" %}
-{% block content %}
-<h2>{{ student.name }}</h2>
-<h2>{{ student.age }}</h2>
-<h2>{{ student.subject }}</h2>
-<h2>{{ student.marks }}</h2>
-<a href="{% url 'student_list' %}" class="btn btn-secondary">
-    <button>Back button</button>
-</a>
-{% endblock %} {% endcomment %}

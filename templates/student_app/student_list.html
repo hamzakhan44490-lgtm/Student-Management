@@ -219,26 +219,3 @@
 </div>
 
 {% endblock %}
-
-{% comment %} {% extends "student_app/base.html" %}
-{% block content %}
-<h2>Student List</h2>
-{% for student in student_list %}
-<h2>{{ forloop.counter }}</h2>
-<h2>{{ student.name }}</h2>
-<h2>{{ student.age }}</h2>
-<h2>{{ student.marks }}</h2>
-<h2>{{ student.subject }}</h2>
-<a href="{% url 'detail_student' student.pk %}">
-    <button class="">View</button>
-</a>
-{% if request.user == student.user %}
-<a href="{% url 'update_student' student.pk %}">
-    <button class="">Edit</button>
-</a>
-<a href="{% url 'delete_student' student.pk %}">
-    <button class="">Delete</button>
-</a>
-{% endif %}
-{% endfor %}
-{% endblock %} {% endcomment %}
