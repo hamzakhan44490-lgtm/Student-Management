@@ -1,0 +1,144 @@
+{% extends "student_app/base.html" %}
+
+{% block content %}
+
+<style>
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#7a1cff,#3d2bff);
+}
+
+.delete-wrapper{
+    max-width:650px;
+    margin:80px auto;
+}
+
+.delete-card{
+    background:#fff;
+    border-radius:25px;
+    padding:45px;
+    text-align:center;
+    box-shadow:0 20px 50px rgba(0,0,0,.18);
+}
+
+.delete-icon{
+    width:90px;
+    height:90px;
+    margin:auto;
+    border-radius:50%;
+    background:#ffe5e5;
+    color:#dc3545;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:40px;
+    margin-bottom:25px;
+}
+
+.delete-card h2{
+    color:#dc3545;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+.delete-card p{
+    font-size:18px;
+    color:#555;
+    margin-bottom:35px;
+}
+
+.student-name{
+    color:#5b21b6;
+    font-weight:700;
+}
+
+.button-group{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+.delete-btn{
+    border:none;
+    padding:12px 35px;
+    border-radius:50px;
+    background:#dc3545;
+    color:white;
+    font-weight:600;
+    transition:.3s;
+}
+
+.delete-btn:hover{
+    background:#bb2d3b;
+}
+
+.cancel-btn{
+    display:inline-block;
+    text-decoration:none;
+    padding:12px 35px;
+    border-radius:50px;
+    background:#6c757d;
+    color:white;
+    font-weight:600;
+    transition:.3s;
+}
+
+.cancel-btn:hover{
+    background:#5c636a;
+    color:white;
+}
+
+</style>
+
+<div class="delete-wrapper">
+
+    <div class="delete-card">
+
+        <div class="delete-icon">
+            🗑️
+        </div>
+
+        <h2>Delete Student</h2>
+
+        <p>
+            Are you sure you want to delete
+            <span class="student-name">{{ student.name }}</span>?
+        </p>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <div class="button-group">
+
+                <button type="submit" class="delete-btn">
+                    Delete
+                </button>
+
+                <a href="{% url 'student_list' %}" class="cancel-btn">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% comment %} {% extends "student_app/base.html" %}
+{% block content %}
+<h2>Student Delete</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Delete">
+</form>
+<a href="{% url 'student_list' %}">
+    <button>Cancel</button>
+</a>
+{% endblock %} {% endcomment %}
