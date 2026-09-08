@@ -79,4 +79,3 @@ class LoginForm(AuthenticationForm):
 class StudentLoginView(LoginView):
     authentication_form = LoginForm
     template_name = "registration/login.html"
-
