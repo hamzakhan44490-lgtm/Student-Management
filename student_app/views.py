@@ -1,4 +1,4 @@
-from .models import Student
+from .models import Student, Course
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
@@ -8,9 +8,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
 from django import forms
-
-# class StudentLoginView(LoginView):
-#     redirect_authenticated_user = True
 
 
 class StudentLogoutView(LogoutView):
@@ -33,7 +30,7 @@ class StudentDetailView(DetailView):
 
 class StudentCreateView(LoginRequiredMixin, CreateView):
     model = Student
-    fields = ["name", "age", "subject", "marks"]
+    fields = ["name", "age", "marks", "email", "enrollment_date", "courses"]
     success_url = reverse_lazy("student_list")
 
     def form_valid(self, form):
@@ -44,7 +41,7 @@ class StudentCreateView(LoginRequiredMixin, CreateView):
 
 class StudentUpdateView(LoginRequiredMixin, UpdateView):
     model = Student
-    fields = ["name", "age", "subject", "marks"]
+    fields = ["name", "age", "marks", "email", "enrollment_date", "courses"]
     success_url = reverse_lazy("student_list")
 
     def get_queryset(self):
@@ -79,3 +76,4 @@ class LoginForm(AuthenticationForm):
 class StudentLoginView(LoginView):
     authentication_form = LoginForm
     template_name = "registration/login.html"
+
