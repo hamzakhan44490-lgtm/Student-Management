@@ -29,9 +29,9 @@ class Student(models.Model):
         if self.name and len(self.name) < 3:
             raise ValidationError("Enter more than or equal 3 character.")
         if self.age and self.age < 1:
-            raise ValidationError("Ensure this value YES is greater than or equal to 1.")
+            raise ValidationError("Ensure this value is greater than or equal to 1.")
         if self.marks and self.marks < 1:
-            raise ValidationError("Ensure this value is YES greater than or equal to 1.")
+            raise ValidationError("Ensure this value is greater than or equal to 1.")
         if self.email and len(self.email) < 15:
             raise ValidationError("Ensure this value is greater than or equal to 15.")
         
