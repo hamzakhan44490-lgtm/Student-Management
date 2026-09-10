@@ -12,8 +12,5 @@ class StudentRegistrationForm(forms.ModelForm):
             "marks": forms.TextInput(attrs={"class": "form-control", "placeholder": "Marks"}),
             "email": forms.EmailInput(attrs={"class": "form-control", "placeholder": "Email Address"}),
             "enrollment_date": forms.DateInput(attrs={"class": "form-control", "id":"datepicker", "type": "date"}),
-            "courses": forms.Select(attrs={"class": "form-select"})
             
         }
-        
-        
