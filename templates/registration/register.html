@@ -28,21 +28,12 @@
 
                 {% csrf_token %}
 
-                <div class="input-box">
-                    <i class="bi bi-person-fill"></i>
-                    {{ form.username }}
-                </div>
+                {% include "student_app/partials/form_input.html" with icon="bi bi-person-fill" field=form.username %}
 
-                <div class="input-box">
-                    <i class="bi bi-lock-fill"></i>
-                    {{ form.password1 }}
-                </div>
+                {% include "student_app/partials/form_input.html" with icon="bi bi-lock-fill" field=form.password1 %}
 
-                <div class="input-box">
-                    <i class="bi bi-shield-lock-fill"></i>
-                    {{ form.password2 }}
-                </div>
-
+                {% include "student_app/partials/form_input.html" with icon="bi bi-shield-lock-fill" field=form.password2 %}
+                
                 <button type="submit" class="register-btn">
                     REGISTER
                 </button>
