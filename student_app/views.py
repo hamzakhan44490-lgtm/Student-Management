@@ -1,13 +1,10 @@
-from .models import Student, Course
+from .models import Student
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy
-from django import forms
 from .forms import StudentRegistrationForm
 from django.shortcuts import redirect
 from django.contrib import messages
@@ -75,9 +72,10 @@ class StudentDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("student_list")
     
     
-    def delete(self, request,  *args, **kwargs):
-        messages.success(request, "Student deleted successfully")
-        return super().delete(request, *args, **kwargs)
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, "Student deleted successfully")
+        return super().form_valid(form)
     
     
     def get_queryset(self):

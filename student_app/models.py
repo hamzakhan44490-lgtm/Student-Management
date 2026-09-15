@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core import validators
 from django.core.exceptions import ValidationError
-from django import forms
+from django.utils import timezone
 
 
 
@@ -20,25 +20,21 @@ class Student(models.Model):
         )
     )
     email = models.EmailField(max_length=100, blank=True)
-    enrollment_date = models.DateField()
+    enrollment_date = models.DateField(default=timezone.localdate())
     is_active = models.BooleanField(default=True)
     courses = models.ManyToManyField("Course")
     
     
     def clean(self):
         if self.name and len(self.name) < 3:
-            raise ValidationError("Enter more than or equal 3 character.")
-        if self.age and self.age < 1:
-            raise ValidationError("Ensure this value is greater than or equal to 1.")
-        if self.marks and self.marks < 1:
-            raise ValidationError("Ensure this value is greater than or equal to 1.")
-        if self.email and len(self.email) < 15:
-            raise ValidationError("Ensure this value is greater than or equal to 15.")
+            raise ValidationError({"name":"Enter more than or equal 3 character."})
         
-        
+        if self.enrollment_date > timezone.localdate():
+            raise ValidationError({"enrollment_date":"Enrollment date cannot be in the future."})
+   
+   
     def __str__(self):
         return self.name
-    
 
 
 class Course(models.Model):
