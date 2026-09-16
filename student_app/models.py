@@ -20,7 +20,7 @@ class Student(models.Model):
         )
     )
     email = models.EmailField(max_length=100, blank=True)
-    enrollment_date = models.DateField(default=timezone.localdate())
+    enrollment_date = models.DateField(default=timezone.localdate)
     is_active = models.BooleanField(default=True)
     courses = models.ManyToManyField("Course")
     
@@ -29,7 +29,7 @@ class Student(models.Model):
         if self.name and len(self.name) < 3:
             raise ValidationError({"name":"Enter more than or equal 3 character."})
         
-        if self.enrollment_date > timezone.localdate():
+        if self.enrollment_date and self.enrollment_date > timezone.localdate():
             raise ValidationError({"enrollment_date":"Enrollment date cannot be in the future."})
    
    

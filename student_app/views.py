@@ -10,6 +10,7 @@ from django.shortcuts import redirect
 from django.contrib import messages
 
 
+
 class StudentLoginView(LoginView):
     success_url = reverse_lazy("student_list")
     template_name = "registration/login.html"
@@ -44,6 +45,7 @@ class StudentCreateView(LoginRequiredMixin, CreateView):
     template_name = "student_app/student_form.html"
     success_url = reverse_lazy("student_list")
 
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         messages.success(self.request, "Student created successfully!")
@@ -73,7 +75,6 @@ class StudentDeleteView(LoginRequiredMixin, DeleteView):
     
     
     def form_valid(self, form):
-        form.instance.user = self.request.user
         messages.success(self.request, "Student deleted successfully")
         return super().form_valid(form)
     
@@ -102,4 +103,5 @@ class StudentDeleteView(LoginRequiredMixin, DeleteView):
 # class StudentLoginView(LoginView):
 #     authentication_form = Loginform
 #     template_name = "registration/login.html"
+
 
