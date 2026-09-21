@@ -9,11 +9,6 @@ from django.utils import timezone
 class Student(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    age = models.IntegerField(
-        validators=(validators.MinValueValidator(1),
-                    validators.MaxValueValidator(120)
-        )
-    )
     marks = models.IntegerField(
         validators=(validators.MinValueValidator(1),
                     validators.MaxValueValidator(100)

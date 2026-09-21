@@ -127,4 +127,3 @@ LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/student_list/"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-EMAIL_FILE_PATH = str(BASE_DIR.joinpath("sent_emails"))

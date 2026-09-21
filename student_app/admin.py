@@ -3,7 +3,7 @@ from .models import Student, Course
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ["name", "age", "marks", "email", "enrollment_date", "is_active"]
+    list_display = ["name", "marks", "email", "enrollment_date", "is_active"]
 
 
 @admin.register(Course)

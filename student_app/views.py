@@ -32,12 +32,14 @@ class RegisterView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class StudentListView(ListView):
+class StudentListView(ListView, LoginRequiredMixin):
     model = Student
+    login_url = "login"
 
 
-class StudentDetailView(DetailView):
+class StudentDetailView(DetailView, LoginRequiredMixin):
     model = Student
+    login_url = "login"
 
 
 class StudentCreateView(LoginRequiredMixin, CreateView):
@@ -68,20 +70,20 @@ class StudentUpdateView(LoginRequiredMixin, UpdateView):
     def get_queryset(self):
         return Student.objects.filter(user=self.request.user)
     
-
+    
 class StudentDeleteView(LoginRequiredMixin, DeleteView):
     model = Student
     success_url = reverse_lazy("student_list")
-    
-    
-    def form_valid(self, form):
-        messages.success(self.request, "Student deleted successfully")
-        return super().form_valid(form)
-    
-    
+    login_url = "login"
+
     def get_queryset(self):
         return Student.objects.filter(user=self.request.user)
-    
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Student deleted successfully!")
+
+        return response
 
 
 # class LoginForm(AuthenticationForm):

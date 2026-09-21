@@ -4,77 +4,108 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'student_app/student_list.css' %}">
+<!-- CSS: Har user ke liye load hogi -->
+<link rel="stylesheet" href="{% static 'student_app/css/student_list.css' %}">
 
 <div class="student-container">
 
-{% for student in student_list %}
+    {% if user.is_authenticated %}
 
-<div class="student-card">
+        <!-- Student List: Sirf logged-in users ke liye -->
 
-    <div class="counter">
-        {{ forloop.counter }}
-    </div>
+        {% for student in student_list %}
 
-    <div class="info">
+        <div class="student-card">
 
-        <div class="item">
-            <small>Name</small>
-            <h4>{{ student.name }}</h4>
-        </div>
+            <div class="counter">
+                {{ forloop.counter }}
+            </div>
 
-        <div class="item">
-            <small>Age</small>
-            <h4>{{ student.age }}</h4>
-        </div>
+            <div class="info">
 
-        <div class="item">
-            <small>Marks</small>
-            <h4>{{ student.marks }}</h4>
-        </div>
+                <div class="item">
+                    <small>Name</small>
+                    <h4>{{ student.name }}</h4>
+                </div>
 
-        <div class="item">
-            <small>Email</small>
-            <h4>{{ student.email }}</h4>
-        </div>
+                <div class="item">
+                    <small>Marks</small>
+                    <h4>{{ student.marks }}</h4>
+                </div>
 
-        <div class="item">
-            <small>Enrollment Date</small>
-            <h4>{{ student.enrollment_date }}</h4>
-        </div>
+                <div class="item">
+                    <small>Email</small>
+                    <h4>{{ student.email }}</h4>
+                </div>
 
-        <div class="item">
+                <div class="item">
+                    <small>Enrollment Date</small>
+                    <h4>{{ student.enrollment_date }}</h4>
+                </div>
 
-            <small>Actions</small>
+                <div class="item">
 
-                <div class="actions">
+                    <small>Actions</small>
 
-                    <a href="{% url 'detail_student' student.pk %}" class="btn btn-info text-dark">
-                        View
-                    </a>
+                    <div class="actions">
 
-                    {% if request.user == student.user %}
-                        <a href="{% url 'update_student' student.pk %}" class="btn btn-warning">
-                            Edit
+                        <a href="{% url 'detail_student' student.pk %}"
+                           class="btn btn-info text-dark">
+                            View
                         </a>
 
-                        <a href="{% url 'delete_student' student.pk %}" class="btn btn-danger">
-                            Delete
-                        </a>
-                    {% else %}
-                        <span class="btn-placeholder"></span>
-                        <span class="btn-placeholder"></span>
-                    {% endif %}
+                        {% if request.user == student.user %}
+
+                            <a href="{% url 'update_student' student.pk %}"
+                               class="btn btn-warning">
+                                Edit
+                            </a>
+
+                            <a href="{% url 'delete_student' student.pk %}"
+                               class="btn btn-danger">
+                                Delete
+                            </a>
+
+                        {% else %}
+
+                            <span class="btn-placeholder"></span>
+                            <span class="btn-placeholder"></span>
+
+                        {% endif %}
+
+                    </div>
 
                 </div>
 
+            </div>
+
         </div>
 
-    </div>
+        {% empty %}
 
-</div>
+            <h3>No students found.</h3>
 
-{% endfor %}
+        {% endfor %}
+
+    {% else %}
+
+        <!-- Logout User: Student list hide -->
+
+        <div class="login-message">
+
+            <h2>🔒 Login Required</h2>
+
+            <p>
+                Please login to view the student list.
+            </p>
+
+            <a href="{% url 'login' %}" class="btn btn-primary">
+                Login
+            </a>
+
+        </div>
+
+    {% endif %}
 
 </div>
 
