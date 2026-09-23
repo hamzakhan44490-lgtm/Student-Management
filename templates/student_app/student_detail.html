@@ -3,13 +3,14 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static "student_app/css/student_detail.css" %}">
+
+<link rel="stylesheet" href="{% static 'student_app/css/student_detail.css' %}">
 
 <div class="detail-wrapper">
 
     <div class="detail-card">
 
-        <h2>Student Details</h2>
+        <h2>🎓 Student Details</h2>
 
         <table class="table table-bordered">
 
@@ -22,19 +23,82 @@
 
             <tbody>
 
+                <!-- User -->
+
+                <tr>
+                    <td>User</td>
+                    <td>{{ student.user.username }}</td>
+                </tr>
+
+                <!-- Name -->
+
                 <tr>
                     <td>Name</td>
                     <td>{{ student.name }}</td>
                 </tr>
 
+                <!-- Email -->
+
                 <tr>
                     <td>Email</td>
-                    <td>{{ student.email }}</td>
+                    <td>
+                        {% if student.email %}
+                            {{ student.email }}
+                        {% else %}
+                            Not provided
+                        {% endif %}
+                    </td>
                 </tr>
+
+                <!-- Marks -->
 
                 <tr>
                     <td>Marks</td>
                     <td>{{ student.marks }}</td>
+                </tr>
+
+                <!-- Enrollment Date -->
+
+                <tr>
+                    <td>Enrollment Date</td>
+                    <td>{{ student.enrollment_date }}</td>
+                </tr>
+
+                <!-- Active Status -->
+
+                <tr>
+                    <td>Status</td>
+                    <td>
+                        {% if student.is_active %}
+                            <span class="status-active">Active</span>
+                        {% else %}
+                            <span class="status-inactive">Inactive</span>
+                        {% endif %}
+                    </td>
+                </tr>
+
+                <!-- Courses -->
+
+                <tr>
+                    <td>Courses</td>
+
+                    <td>
+
+                        {% for course in student.courses.all %}
+
+                            <span class="course-badge">
+                                {{ course.name }}
+                            </span>
+
+                        {% empty %}
+
+                            <span class="no-course">
+                                No courses assigned
+                            </span>
+
+                        {% endfor %}
+
+                    </td>
                 </tr>
 
             </tbody>
@@ -54,4 +118,3 @@
 </div>
 
 {% endblock %}
-

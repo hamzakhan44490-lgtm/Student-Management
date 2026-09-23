@@ -3,7 +3,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
 from .forms import StudentRegistrationForm
 from django.shortcuts import redirect
@@ -32,20 +32,22 @@ class RegisterView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class StudentListView(ListView, LoginRequiredMixin):
+class StudentListView(LoginRequiredMixin, ListView ):
     model = Student
     login_url = "login"
-
-
-class StudentDetailView(DetailView, LoginRequiredMixin):
+    
+    
+class StudentDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Student
     login_url = "login"
+    permission_required = "student_app.view_student"
 
 
-class StudentCreateView(LoginRequiredMixin, CreateView):
+class StudentCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = StudentRegistrationForm
     template_name = "student_app/student_form.html"
     success_url = reverse_lazy("student_list")
+    permission_required = "student_app.add_student"
 
 
     def form_valid(self, form):
@@ -55,10 +57,11 @@ class StudentCreateView(LoginRequiredMixin, CreateView):
     
 
 
-class StudentUpdateView(LoginRequiredMixin, UpdateView):
+class StudentUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = StudentRegistrationForm
     template_name = "student_app/student_form.html"
     success_url = reverse_lazy("student_list")
+    permission_required = "student_app.change_student"
     
     
     def form_valid(self, form):
@@ -71,10 +74,12 @@ class StudentUpdateView(LoginRequiredMixin, UpdateView):
         return Student.objects.filter(user=self.request.user)
     
     
-class StudentDeleteView(LoginRequiredMixin, DeleteView):
+class StudentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Student
     success_url = reverse_lazy("student_list")
     login_url = "login"
+    permission_required = "student_app.delete_student"
+
 
     def get_queryset(self):
         return Student.objects.filter(user=self.request.user)
