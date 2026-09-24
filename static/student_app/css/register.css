@@ -223,85 +223,111 @@ margin-bottom: 30px;
 }
 
 /* ================================
-INPUT
+INPUT + SELECT
 form_input.html remains SAME
 ================================ */
 
+
 .input-box {
-position: relative;
-
-
-margin-bottom: 17px;
-
-
+    position: relative;
+    margin-bottom: 17px;
 }
 
 .input-box i {
-position: absolute;
-
-
-left: 21px;
-top: 50%;
-
-transform: translateY(-50%);
-
-color: #7425e8;
-
-font-size: 18px;
-
-z-index: 2;
-
-transition: .3s;
-
-
+    position: absolute;
+    left: 21px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7425e8;
+    font-size: 18px;
+    z-index: 2;
+    transition: .3s;
 }
 
-.input-box input {
-width: 100%;
-height: 56px;
 
+/* ================================
+   TEXT INPUTS
+================================ */
 
-border: 1px solid #eee8fa;
+.input-box input,
+.input-box select {
 
-outline: none;
+    width: 100%;
+    height: 56px;
 
-border-radius: 16px;
+    border: 1px solid #eee8fa;
+    outline: none;
+    border-radius: 16px;
 
-padding: 0 20px 0 57px;
+    padding: 0 20px 0 57px;
 
-background: #faf8ff;
+    background: #faf8ff;
+    color: #302541;
 
-color: #302541;
+    font-size: 14px;
 
-font-size: 14px;
+    box-shadow: 0 5px 15px rgba(90, 30, 180, .05);
 
-box-shadow: 0 5px 15px rgba(90, 30, 180, .05);
-
-transition: all .3s ease;
-
-
+    transition: all .3s ease;
 }
+
+
+/* Placeholder */
 
 .input-box input::placeholder {
-color: #aaa3b5;
+    color: #aaa3b5;
 }
 
-.input-box input:focus {
-background: white;
 
+/* ================================
+   SELECT
+================================ */
 
-border-color: #7928ed;
+.input-box select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 
-box-shadow:
-    0 0 0 4px rgba(122, 28, 255, .10),
-    0 8px 20px rgba(90, 30, 180, .10);
-
-
+    cursor: pointer;
 }
 
-.input-box input:focus + i {
-color: #5420d6;
+
+/* ================================
+   FOCUS
+================================ */
+
+.input-box input:focus,
+.input-box select:focus {
+
+    background: white;
+
+    border-color: #7928ed;
+
+    box-shadow:
+        0 0 0 4px rgba(122, 28, 255, .10),
+        0 8px 20px rgba(90, 30, 180, .10);
 }
+
+
+/* ================================
+   SELECT ARROW
+================================ */
+
+.input-box select {
+    background-image: linear-gradient(45deg, transparent 50%, #7425e8 50%),
+                      linear-gradient(135deg, #7425e8 50%, transparent 50%);
+
+    background-position:
+        calc(100% - 22px) 24px,
+        calc(100% - 16px) 24px;
+
+    background-size:
+        6px 6px,
+        6px 6px;
+
+    background-repeat: no-repeat;
+}
+
 
 /* ================================
 REGISTER BUTTON
