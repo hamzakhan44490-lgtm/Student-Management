@@ -42,9 +42,13 @@
             <!-- Right Side -->
             <div class="d-flex gap-2">
 
+                {% if perms.student_app.add_student %}
+
                 <a href="{% url 'create_student' %}" class="btn btn-primary">
                     + Add Student
                 </a>
+
+                {% endif %}
 
                 <a href="{% url 'register' %}" class="btn btn-success">
                     Register

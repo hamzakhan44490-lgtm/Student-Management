@@ -1,11 +1,11 @@
+from django.contrib.auth.models import Group
 from .models import Student
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
-from .forms import StudentRegistrationForm
+from .forms import StudentRegistrationForm, UserRegisterationForm
 from django.shortcuts import redirect
 from django.contrib import messages
 
@@ -21,7 +21,7 @@ class StudentLogoutView(LogoutView):
 
 
 class RegisterView(CreateView):
-    form_class = UserCreationForm
+    form_class = UserRegisterationForm
     template_name = "registration/register.html"
     success_url = reverse_lazy("login")
     
@@ -30,11 +30,19 @@ class RegisterView(CreateView):
         if request.user.is_authenticated:
             return redirect("student_list")
         return super().dispatch(request, *args, **kwargs)
+    
+    def form_valid(self, form):
+        response =  super().form_valid(form)
+        role = form.cleaned_data["role"]
+        group = Group.objects.get(name=role)
+        self.object.group.add(group)
+        return response
 
 
-class StudentListView(LoginRequiredMixin, ListView ):
+class StudentListView(LoginRequiredMixin, ListView):
     model = Student
     login_url = "login"
+
     
     
 class StudentDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
@@ -90,25 +98,5 @@ class StudentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView)
 
         return response
 
-
-# class LoginForm(AuthenticationForm):
-
-#     username = forms.CharField(
-#         widget=forms.TextInput(attrs={
-#             "class": "form-control",
-#             "placeholder": "Username"
-#         })
-#     )
-
-#     password = forms.CharField(
-#         widget=forms.PasswordInput(attrs={
-#             "class": "form-control",
-#             "placeholder": "Password"
-#         })
-#     )
-
-# class StudentLoginView(LoginView):
-#     authentication_form = Loginform
-#     template_name = "registration/login.html"
 
 

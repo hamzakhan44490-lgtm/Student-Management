@@ -1,5 +1,7 @@
 from django import forms
 from .models import Student
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 
 class StudentRegistrationForm(forms.ModelForm):
@@ -13,3 +15,17 @@ class StudentRegistrationForm(forms.ModelForm):
             "enrollment_date": forms.DateInput(attrs={"class": "form-control", "id":"datepicker", "type": "date"}),
             
         }
+
+class UserRegisterationForm(UserCreationForm):
+    
+    ROLL_CHOICES = [
+        ("Teacher", "Teacher"),
+        ("Student", "Student"),
+    ]
+    
+    email = forms.EmailField(required=False, label="Email")
+    role = forms.ChoiceField(required=True, choices=ROLL_CHOICES)
+    
+    class Meta:
+        model = User
+        fields = ["username", "email", "password1", "password2"]
